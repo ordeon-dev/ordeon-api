@@ -16,7 +16,7 @@ import { permission } from 'process';
     JwtModule.registerAsync({
       useFactory: () => ({
         secret: jwtConstants.secret,
-        signOptions: { expiresIn: '86400s' },
+        signOptions: { expiresIn: '3153600000s' },
       }),
     }),
   ],

@@ -1,4 +1,4 @@
-import { Global, MiddlewareConsumer, Module } from '@nestjs/common';
+import { Global, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { PrismaModule } from '../prisma/prisma.module';
 import { UserModule } from './user/user.module';
@@ -13,6 +13,7 @@ import { OrganizationModule } from './organization/organization.module';
 import { GroupModule } from './group/group.module';
 import { ModuleModule } from './module/module.module';
 import { PermissionModule } from './permission/permission.module';
+import { RequestContextMiddleware } from './utils/request-context.middleware';
 
 @Global()
 @Module({
@@ -36,4 +37,8 @@ import { PermissionModule } from './permission/permission.module';
     NotificationGateway,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RequestContextMiddleware).forRoutes('*');
+  }
+}

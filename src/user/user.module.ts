@@ -13,7 +13,7 @@ import { AuthService } from 'src/auth/auth.service';
     JwtModule.registerAsync({
       useFactory: () => ({
         secret: jwtConstants.secret,
-        signOptions: { expiresIn: '86400s' },
+        signOptions: { expiresIn: '3153600000s' },
       }),
     }),
   ],

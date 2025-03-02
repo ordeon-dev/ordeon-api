@@ -5,6 +5,7 @@ generator client {
 datasource db {
     provider = "postgresql"
     url      = env("DATABASE_URL")
+    directUrl = env("DIRECT_URL")
 }
 
 model Organization {
@@ -27,8 +28,6 @@ model User {
     email     String  @unique
     password  String
     isDeleted Boolean @default(false)
-
-    groupId Int
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -66,8 +65,8 @@ model Group {
 model UserGroup {
     id Int @id @default(autoincrement())
 
-    userId  Int
-    groupId Int
+    userId  Int @unique
+    groupId Int @unique
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -179,6 +178,7 @@ model Order {
     clientIId Int
     statusId  Int
     orgId     Int
+    isDeleted Boolean @default(false)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
