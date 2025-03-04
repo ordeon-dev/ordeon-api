@@ -1,18 +1,18 @@
 import { Global, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { PrismaModule } from '../prisma/prisma.module';
-import { UserModule } from './user/user.module';
+import { UserModule } from './modules/user/user.module';
 import { CommandModule } from './command/command.module';
 import { AuthModule } from './auth/auth.module';
 import { AuthController } from './auth/auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthGuard } from './auth/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
-import { NotificationGateway } from './notification/notification.gateway';
-import { OrganizationModule } from './organization/organization.module';
-import { GroupModule } from './group/group.module';
-import { ModuleModule } from './module/module.module';
-import { PermissionModule } from './permission/permission.module';
+import { NotificationGateway } from './gateway/notification/notification.gateway';
+import { OrganizationModule } from './modules/organization/organization.module';
+import { GroupModule } from './modules/group/group.module';
+import { ModuleModule } from './modules/module/module.module';
+import { PermissionModule } from './modules/permission/permission.module';
 import { RequestContextMiddleware } from './utils/request-context.middleware';
 
 @Global()

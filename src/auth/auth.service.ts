@@ -7,9 +7,9 @@ import {
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { User } from '@prisma/client';
-import { UserService } from 'src/user/user.service';
+import { UserService } from 'src/hierarchy/user/user.service';
 import { JwtService } from '@nestjs/jwt';
-import { RegisterUserDto } from 'src/user/dto/register-user.dto';
+import { RegisterUserDto } from 'src/hierarchy/user/dto/register-user.dto';
 import { PrismaService } from 'prisma/prisma.service';
 import { group } from 'console';
 import { RequestContext } from 'src/utils/request-context';
@@ -141,12 +141,10 @@ export class AuthService {
   }
 
   async completeSetup(user_id: number, organization_id: number) {
-
-
     const group = await this.prisma.group.create({
       data: {
         name: 'Administrador',
-        orgId: organization_id
+        orgId: organization_id,
       },
     });
 
