@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '../app.module';
-import { CommandService } from '../command/command.service';
+import { CommandService } from '../hierarchy/command/command.service';
 
 async function runSeeder() {
   const app = await NestFactory.create(AppModule);

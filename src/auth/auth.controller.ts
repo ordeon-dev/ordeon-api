@@ -1,8 +1,8 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
-import { UserService } from 'src/user/user.service';
-import { User } from 'src/user/decorators/Index.decorator';
+import { UserService } from 'src/hierarchy/user/user.service';
+import { User } from 'src/hierarchy/user/decorators/Index.decorator';
 import { RequestContext } from 'src/utils/request-context';
 
 @Controller('auth')
@@ -31,28 +31,31 @@ export class AuthController {
     @Body() body: { name: string; email: string; password: string },
   ) {
     const { name, email, password } = body;
-    
+
     const user = {
       name,
       email,
       password,
     };
-    
+
     const result = await this.authService.register(user);
-    
+
     if (!result) {
       return { message: 'Invalid credentials' };
     }
-    
-    return { accessToken: result.access_token, user: result.user, message: result.message };
+
+    return {
+      accessToken: result.access_token,
+      user: result.user,
+      message: result.message,
+    };
   }
-  
+
   @Post('complete-setup')
   completeSetup() {
-    
     const user_id = parseInt(RequestContext.get('user_id'));
     const organization_id = parseInt(RequestContext.get('organization_id'));
-    
+
     return this.authService.completeSetup(user_id, organization_id);
   }
 }
