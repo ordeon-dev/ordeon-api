@@ -7,9 +7,9 @@ import {
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { User } from '@prisma/client';
-import { UserService } from 'src/hierarchy/user/user.service';
+import { UserService } from 'src/services/user/user.service';
 import { JwtService } from '@nestjs/jwt';
-import { RegisterUserDto } from 'src/hierarchy/user/dto/register-user.dto';
+import { RegisterUserDto } from 'src/dto/user/register-user.dto';
 import { PrismaService } from 'prisma/prisma.service';
 import { group } from 'console';
 import { RequestContext } from 'src/utils/request-context';

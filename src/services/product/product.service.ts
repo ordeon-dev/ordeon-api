@@ -7,7 +7,7 @@ import { Product } from 'src/entities/product/produtct.entity';
 export class ProductService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async createProduct(createProductDto: CreateProductDto) {
+  async create(createProductDto: CreateProductDto) {
     const product = new Product(createProductDto);
 
     await this.prisma.product.create({

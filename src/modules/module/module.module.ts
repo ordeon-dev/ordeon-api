@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ModuleService } from 'src/hierarchy/module/module.service';
-import { ModuleController } from 'src/hierarchy/module/module.controller';
+import { ModuleService } from 'src/services/module/module.service';
+import { ModuleController } from 'src/controllers/module/module.controller';
 
 @Module({
   controllers: [ModuleController],
