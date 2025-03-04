@@ -1,8 +1,8 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
-import { UserService } from 'src/hierarchy/user/user.service';
-import { User } from 'src/hierarchy/user/decorators/Index.decorator';
+import { UserService } from 'src/services/user/user.service';
+import { User } from 'src/decorators/Index.decorator';
 import { RequestContext } from 'src/utils/request-context';
 
 @Controller('auth')

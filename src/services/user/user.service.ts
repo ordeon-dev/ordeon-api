@@ -8,8 +8,8 @@ import {
 import { User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'prisma/prisma.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto } from 'src/dto/user/create-user.dto';
+import { UpdateUserDto } from 'src/dto/user/update-user.dto';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -104,7 +104,7 @@ export class UserService {
       user,
     };
   }
-  
+
   async update(
     id: number,
     updateUserDto: UpdateUserDto,
@@ -120,11 +120,11 @@ export class UserService {
         },
       },
     });
-    
+
     if (!user) {
       throw new NotFoundException(`Usuário não encontrado.`);
     }
-    
+
     const updatedUser = await this.prisma.user.update({
       where: { id },
       data: {
@@ -133,7 +133,7 @@ export class UserService {
         password: await bcrypt.hash(updateUserDto.password, 10),
       },
     });
-    
+
     return updatedUser;
   }
 }

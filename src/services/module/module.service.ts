@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateModuleDto } from './dto/create-module.dto';
-import { UpdateModuleDto } from './dto/update-module.dto';
+import { CreateModuleDto } from 'src/dto/module/create-module.dto';
+import { UpdateModuleDto } from 'src/dto/module/update-module.dto';
 
 @Injectable()
 export class ModuleService {

@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { PrismaModule } from 'prisma/prisma.module';
-import { UserController } from '../../hierarchy/user/user.controller';
-import { UserService } from '../../hierarchy/user/user.service';
-import { jwtConstants } from '../../auth/constants';
+import { UserController } from 'src/controllers/user/user.controller';
+import { UserService } from 'src/services/user/user.service';
+import { jwtConstants } from 'src/auth/constants';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { AuthService } from 'src/auth/auth.service';
 

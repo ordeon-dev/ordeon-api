@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
-import { Seeder } from './seeder';
-import { CommandService } from './command.service';
-import { PrismaService } from 'prisma/prisma.service';
 import { PrismaModule } from 'prisma/prisma.module';
+import { Seeder } from 'src/command/seeder';
+import { CommandService } from 'src/services/command/command.service';
 
 @Module({
   providers: [Seeder, CommandService],
