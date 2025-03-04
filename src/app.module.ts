@@ -15,6 +15,7 @@ import { ModuleModule } from './modules/module/module.module';
 import { PermissionModule } from './modules/permission/permission.module';
 import { RequestContextMiddleware } from './utils/request-context.middleware';
 import { ProductModule } from './modules/product/product.module';
+import { OsModule } from './modules/os/os.module';
 
 @Global()
 @Module({
@@ -29,6 +30,7 @@ import { ProductModule } from './modules/product/product.module';
     ModuleModule,
     PermissionModule,
     ProductModule,
+    OsModule,
   ],
   controllers: [AppController, AuthController],
   providers: [

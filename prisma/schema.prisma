@@ -175,7 +175,7 @@ model Product {
 
 model Order {
     id        Int @id @default(autoincrement())
-    clientIId Int
+    clientId Int
     statusId  Int
     orgId     Int
     isDeleted Boolean @default(false)
@@ -183,7 +183,7 @@ model Order {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    client       Client         @relation(fields: [clientIId], references: [id])
+    client       Client         @relation(fields: [clientId], references: [id])
     status       OrderStatus    @relation(fields: [statusId], references: [id])
     organization Organization   @relation(fields: [orgId], references: [id])
     orderProduct OrderProduct[]
@@ -195,6 +195,7 @@ model OrderProduct {
     orderId   Int
     productId Int
     show      Boolean @default(true)
+    quantity  Int     @default(1)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
