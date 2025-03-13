@@ -7,10 +7,19 @@ export class Client {
   status: boolean;
   orgId: number;
 
+  clientVehicle: ClientVehicle[];
+
   createdAt: Date;
   updatedAt: Date;
 
   constructor(partial: Partial<Client>) {
     Object.assign(this, partial);
   }
+}
+
+export class ClientVehicle {
+  clientId: number;
+  name: string;
+  plate: string;
+  document: string;
 }

@@ -3,6 +3,8 @@ import {
   Controller,
   Get,
   Post,
+  Put,
+  Delete,
   Body,
   Param,
   Logger,
@@ -11,11 +13,24 @@ import {
 } from '@nestjs/common';
 import { CreateClientDto } from 'src/dto/client/create-client.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
+import { UpdateClientDto } from 'src/dto/client/update-client.dto';
 
 @Controller('client')
 export class ClientController {
   private readonly logger = new Logger(ClientController.name);
   constructor(private readonly clientService: ClientService) {}
+
+  @Public()
+  @Get()
+  async findAll() {
+    return this.clientService.findAll();
+  }
+
+  @Public()
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return this.clientService.findOne(id);
+  }
 
   @Public()
   @Post()
@@ -30,14 +45,17 @@ export class ClientController {
   }
 
   @Public()
-  @Get()
-  async findAll() {
-    return this.clientService.findAll();
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateClientDto: UpdateClientDto,
+  ) {
+    return await this.clientService.update(id, updateClientDto);
   }
 
   @Public()
-  @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.clientService.findOne(id);
+  @Delete(':id')
+  async remove(@Param('id') id: string) {
+    return await this.clientService.delete(id);
   }
 }
