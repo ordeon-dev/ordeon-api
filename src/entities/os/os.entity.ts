@@ -13,6 +13,7 @@ export class Os {
 
 export class OrderProduct {
   productId: number;
+  show: boolean;
   quantity: number;
 }
 
