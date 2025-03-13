@@ -8,6 +8,7 @@ export class Client {
   orgId: number;
 
   clientVehicle: ClientVehicle[];
+  clientContact: ClientContact[];
 
   createdAt: Date;
   updatedAt: Date;
@@ -24,6 +25,17 @@ export class ClientVehicle {
   document: string;
 
   constructor(partial: Partial<ClientVehicle>) {
+    Object.assign(this, partial);
+  }
+}
+
+export class ClientContact {
+  clientId: number;
+  contactName: string;
+  phone: string[];
+  email: string;
+
+  constructor(partial: Partial<ClientContact>) {
     Object.assign(this, partial);
   }
 }

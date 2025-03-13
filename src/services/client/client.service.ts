@@ -4,7 +4,14 @@ import { CreateClientDto } from 'src/dto/client/create-client.dto';
 import { UpdateClientDto } from 'src/dto/client/update-client.dto';
 import { CreateVehicleDto } from 'src/dto/vehicle/create-vehicle.dto';
 import { UpdateVehicleDto } from 'src/dto/vehicle/update-vehicle.dto';
-import { Client, ClientVehicle } from 'src/entities/client/client.entity';
+import { CreateContactDto } from 'src/dto/contact/create-contact.dto';
+import { UpdateContactDto } from 'src/dto/contact/update-contact.dto';
+
+import {
+  Client,
+  ClientContact,
+  ClientVehicle,
+} from 'src/entities/client/client.entity';
 @Injectable()
 export class ClientService {
   constructor(private prisma: PrismaService) {}
@@ -88,6 +95,88 @@ export class ClientService {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+
+  /*
+   * client contact
+   */
+
+  async getClientContact(clientId: string) {
+    const clientContact = await this.prisma.contact.findMany({
+      where: { clientId: Number(clientId) },
+    });
+
+    const response = {
+      message: 'Client contact retrieved successfully',
+      clientContact,
+    };
+    return response;
+  }
+
+  async getClientContactById(clientId: string, contactId: string) {
+    const clientContact = await this.prisma.contact.findUnique({
+      where: { id: Number(contactId), clientId: Number(clientId) },
+    });
+
+    const response = {
+      message: 'Client contact retrieved successfully',
+      clientContact,
+    };
+    return response;
+  }
+
+  async createClientContact(
+    clientId: string,
+    createContactDto: CreateContactDto,
+  ) {
+    const clientContact = new ClientContact(createContactDto);
+    await this.prisma.contact.create({
+      data: {
+        clientId: Number(clientId),
+        contactName: clientContact.contactName,
+        phone: clientContact.phone.map((phone) => phone),
+        email: clientContact.email,
+      },
+    });
+
+    const response = {
+      message: 'Client contact created successfully',
+      clientContact,
+    };
+    return response;
+  }
+
+  async updateClientContact(
+    clientId: string,
+    contactId: string,
+    updateContactDto: UpdateContactDto,
+  ) {
+    const clientContact = new ClientContact(updateContactDto);
+    await this.prisma.contact.update({
+      where: { id: Number(contactId), clientId: Number(clientId) },
+      data: {
+        contactName: clientContact.contactName,
+        phone: clientContact.phone.map((phone) => phone),
+        email: clientContact.email,
+      },
+    });
+
+    const response = {
+      message: 'Client contact updated successfully',
+      clientContact,
+    };
+    return response;
+  }
+
+  async deleteClientContact(clientId: string, contactId: string) {
+    await this.prisma.contact.delete({
+      where: { id: Number(contactId), clientId: Number(clientId) },
+    });
+
+    const response = {
+      message: 'Client contact deleted successfully',
+    };
+    return response;
   }
 
   /*

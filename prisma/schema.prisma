@@ -129,7 +129,7 @@ model Client {
 
   organization  Organization    @relation(fields: [orgId], references: [id])
   clientVehicle ClientVehicle[]
-  contato       Contact[]
+  contact       Contact[]
   order         Order[]
 }
 

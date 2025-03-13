@@ -16,6 +16,8 @@ import { Public } from 'src/auth/decorators/public.decorator';
 import { UpdateClientDto } from 'src/dto/client/update-client.dto';
 import { CreateVehicleDto } from 'src/dto/vehicle/create-vehicle.dto';
 import { UpdateVehicleDto } from 'src/dto/vehicle/update-vehicle.dto';
+import { CreateContactDto } from 'src/dto/contact/create-contact.dto';
+import { UpdateContactDto } from 'src/dto/contact/update-contact.dto';
 
 @Controller('client')
 export class ClientController {
@@ -63,6 +65,56 @@ export class ClientController {
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return await this.clientService.delete(id);
+  }
+
+  /**
+   * client contact endpoints
+   */
+  @Public()
+  @Get(':id/contacts')
+  async findContacts(@Param('id') id: string) {
+    return await this.clientService.getClientContact(id);
+  }
+
+  @Public()
+  @Get(':id/contacts/:contactId')
+  async findContact(
+    @Param('id') id: string,
+    @Param('contactId') contactId: string,
+  ) {
+    return await this.clientService.getClientContactById(id, contactId);
+  }
+
+  @Public()
+  @Post(':id/contacts')
+  async createContact(
+    @Param('id') id: string,
+    @Body() createContactDto: CreateContactDto,
+  ) {
+    return await this.clientService.createClientContact(id, createContactDto);
+  }
+
+  @Public()
+  @Put(':id/contacts/:contactId')
+  async updateContact(
+    @Param('id') id: string,
+    @Param('contactId') contactId: string,
+    @Body() updateContactDto: UpdateContactDto,
+  ) {
+    return await this.clientService.updateClientContact(
+      id,
+      contactId,
+      updateContactDto,
+    );
+  }
+
+  @Public()
+  @Delete(':id/contacts/:contactId')
+  async deleteContact(
+    @Param('id') id: string,
+    @Param('contactId') contactId: string,
+  ) {
+    return await this.clientService.deleteClientContact(id, contactId);
   }
 
   /**
