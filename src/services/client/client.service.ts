@@ -2,10 +2,16 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import { CreateClientDto } from 'src/dto/client/create-client.dto';
 import { UpdateClientDto } from 'src/dto/client/update-client.dto';
-import { Client } from 'src/entities/client/client.entity';
+import { CreateVehicleDto } from 'src/dto/vehicle/create-vehicle.dto';
+import { UpdateVehicleDto } from 'src/dto/vehicle/update-vehicle.dto';
+import { Client, ClientVehicle } from 'src/entities/client/client.entity';
 @Injectable()
 export class ClientService {
   constructor(private prisma: PrismaService) {}
+
+  /*
+   * client
+   */
 
   async findAll() {
     return this.prisma.client.findMany();
@@ -79,6 +85,98 @@ export class ClientService {
     } catch (error) {
       throw new HttpException(
         `Error deleting client ${error}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  /*
+   * client vehicle
+   */
+  async getClientVehicle(clientId: string) {
+    const clientVehicle = await this.prisma.clientVehicle.findMany({
+      where: { clientId: Number(clientId) },
+    });
+
+    const response = {
+      message: 'Client vehicle retrieved successfully',
+      clientVehicle,
+    };
+    return response;
+  }
+
+  async getVehicleById(clientId: string, vehicleId: string) {
+    const vehicle = await this.prisma.clientVehicle.findUnique({
+      where: { id: Number(vehicleId), clientId: Number(clientId) },
+    });
+
+    const response = {
+      message: 'Vehicle retrieved successfully',
+      vehicle,
+    };
+    return response;
+  }
+
+  async createClientVehicle(
+    clientId: string,
+    createVehicleDto: CreateVehicleDto,
+  ) {
+    const clientVehicle = new ClientVehicle(createVehicleDto);
+
+    await this.prisma.clientVehicle.create({
+      data: {
+        clientId: Number(clientId),
+        name: clientVehicle.name,
+        plate: clientVehicle.plate,
+        document: clientVehicle.document,
+      },
+    });
+
+    const response = {
+      message: 'Client vehicle created successfully',
+      clientVehicle,
+    };
+    return response;
+  }
+
+  async updateClientVehicle(
+    clientId: string,
+    vehicleId: string,
+    updateVehicleDto: UpdateVehicleDto,
+  ) {
+    const clientVehicle = await this.prisma.clientVehicle.update({
+      where: { id: Number(vehicleId), clientId: Number(clientId) },
+      data: {
+        name: updateVehicleDto.name,
+        plate: updateVehicleDto.plate,
+        document: updateVehicleDto.document,
+      },
+    });
+
+    const response = {
+      message: 'Client vehicle updated successfully',
+      clientVehicle,
+    };
+    return response;
+  }
+
+  async deleteClientVehicle(clientId: string, vehicleId: string) {
+    try {
+      await this.prisma.orderVehicle.deleteMany({
+        where: { vehicleId: Number(vehicleId) },
+      });
+
+      await this.prisma.clientVehicle.delete({
+        where: { id: Number(vehicleId), clientId: Number(clientId) },
+      });
+
+      const response = {
+        message: 'Client vehicle deleted successfully',
+      };
+      return response;
+    } catch (error) {
+      throw new HttpException(
+        `Error deleting client vehicle ${error}`,
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }

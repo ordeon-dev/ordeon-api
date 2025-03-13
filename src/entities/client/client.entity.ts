@@ -22,4 +22,8 @@ export class ClientVehicle {
   name: string;
   plate: string;
   document: string;
+
+  constructor(partial: Partial<ClientVehicle>) {
+    Object.assign(this, partial);
+  }
 }
