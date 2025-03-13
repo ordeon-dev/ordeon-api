@@ -23,11 +23,32 @@ export class OsService {
         orderProduct: {
           create: os.orderProduct.map((product) => ({
             productId: product.productId,
+            show: product.show,
+            quantity: product.quantity,
           })),
         },
         orgId: os.orgId,
       },
     });
     return os;
+  }
+
+  async findMany() {
+    return this.prisma.order.findMany({
+      include: {
+        orderVehicle: true,
+        orderProduct: true,
+      },
+    });
+  }
+
+  async findOne(orderId: string) {
+    return this.prisma.order.findUnique({
+      where: { id: Number(orderId) },
+      include: {
+        orderVehicle: true,
+        orderProduct: true,
+      },
+    });
   }
 }

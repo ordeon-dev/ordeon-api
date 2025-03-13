@@ -37,7 +37,7 @@ export class ClientController {
 
   @Public()
   @Get(':id')
-  async findOne(@Param('id') id: number) {
+  async findOne(@Param('id') id: string) {
     return this.clientService.findOne(id);
   }
 }
